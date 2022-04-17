@@ -18,9 +18,11 @@ export default function NavBar({ setFormOpen }) {
         <Menu.Item as={NavLink} to='/events' name='Events' />
         {/* <Menu.Item as={NavLink} to='/sandbox' name='Sandbox' /> */}
         {authenticated && (
-          <Menu.Item as={NavLink} to='/createEvent'>
+          <><Menu.Item as={NavLink} to='/createEvent'>
             <Button positive inverted content='Create Event' />
-          </Menu.Item>
+          </Menu.Item><Menu.Item as={NavLink} to='/reward'>
+              <Button positive inverted content='Rewards' />
+            </Menu.Item></>
         )}
         {authenticated ? (
           <SignedInMenu />

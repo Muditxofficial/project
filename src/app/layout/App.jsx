@@ -6,7 +6,7 @@ import { Route, useLocation } from 'react-router-dom';
 import HomePage from '../../features/home/HomePage';
 import EventDetailedPage from '../../features/events/eventDetailed/EventDetailedPage';
 import EventForm from '../../features/events/eventForm/EventForm';
-
+import "@stripe/stripe-js";
 import ModalManager from '../common/modals/ModalManager';
 import { ToastContainer } from 'react-toastify';
 import ErrorComponent from '../common/errors/ErrorComponent';
@@ -15,6 +15,9 @@ import { useSelector } from 'react-redux';
 import LoadingComponent from './LoadingComponent';
 import ProfilePage from '../../features/profiles/profilePage/ProfilePage';
 import PrivateRoute from './PrivateRoute';
+import Checkout from '../../features/payment/Checkout';
+import Success from '../../features/payment/Success';
+import Cancel from '../../features/payment/Cancel';
 
 export default function App() {
   const { key } = useLocation();
@@ -42,8 +45,11 @@ export default function App() {
                 key={key}
               />
               <PrivateRoute path='/account' component={AccountPage} />
+              <PrivateRoute path='/reward' component={Checkout} />
               <PrivateRoute path='/profile/:id' component={ProfilePage} />
               <Route path='/error' component={ErrorComponent} />
+              <Route path="/success" component={Success} />
+              <Route path="/cancel" component={Cancel} />
             </Container>
           </>
         )}
