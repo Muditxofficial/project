@@ -13,14 +13,14 @@ export default function EventsFeed() {
 
   useEffect(() => {
     onValue(getUserFeedRef(), snapshot => {
-        if (!snapshot.exists()) {
-            return;
-        }
-        const feed = firebaseObjectToArray(snapshot.val()).reverse();
-        dispatch(listenToFeed(feed))
+      if (!snapshot.exists()) {
+        return;
+      }
+      const feed = firebaseObjectToArray(snapshot.val()).reverse();
+      dispatch(listenToFeed(feed))
     })
     return () => {
-        off(getUserFeedRef())
+      off(getUserFeedRef())
     }
   }, [dispatch])
 
@@ -30,7 +30,7 @@ export default function EventsFeed() {
       <Segment attached='bottom'>
         <Feed>
           {feed.map(post => (
-              <EventFeedItem post={post} key={post.id} />
+            <EventFeedItem post={post} key={post.id} />
           ))}
         </Feed>
       </Segment>

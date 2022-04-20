@@ -116,17 +116,7 @@ export default function EventForm({ match, history, location }) {
             />
             <MyTextArea name='description' placeholder='Description' rows={3} />
             <Header sub color='teal' content='Event Location Details' />
-            {/* <MyPlaceInput name='city' placeholder='City' />
-            <MyPlaceInput
-              name='venue'
-              disabled={!values.city.latLng}
-              placeholder='Venue'
-              options={{
-                location: new google.maps.LatLng(values.city.latLng),
-                radius: 1000,
-                types: ['establishment'],
-              }}
-            /> */}
+
             <MyDateInput
               name='date'
               placeholderText='Event date'
@@ -136,6 +126,8 @@ export default function EventForm({ match, history, location }) {
               dateFormat='MMMM d, yyyy h:mm a'
               autoComplete='off'
             />
+            <MyTextInput name='latitude' placeholder='Location Latitude' />
+            <MyTextInput name='longitude' placeholder='Location Longitude' />
             {selectedEvent && (
               <Button
                 loading={loadingCancel}

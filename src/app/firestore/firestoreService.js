@@ -18,7 +18,8 @@ import {
   increment,
   writeBatch,
   limit,
-  startAfter
+  startAfter,
+  FieldValue
 } from 'firebase/firestore';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { app } from '../config/firebase';
@@ -270,9 +271,16 @@ export async function followUser(profile) {
       photoURL: profile.photoURL || '/assets/user.png',
       uid: profile.id
     });
-
+    batch.set(doc(db, 'following', profile.id, 'userFollowers', user.uid), {
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      uid: user.uid
+    });
+    batch.update(doc(db, 'users', profile.id), {
+      followerCount: FieldValue.increment(1)
+    })
     batch.update(doc(db, 'users', user.uid), {
-      followingCount: increment(1)
+      followingCount: FieldValue.increment(1)
     })
     return await batch.commit();
   } catch (e) {
@@ -285,9 +293,13 @@ export async function unfollowUser(profile) {
   const batch = writeBatch(db);
   try {
     batch.delete(doc(db, 'following', user.uid, 'userFollowing', profile.id));
+    batch.delete(doc(db, 'following', profile.id, 'userFollowers', user.uid));
     batch.update(doc(db, 'users', user.uid), {
-      followingCount: increment(-1)
+      followingCount: FieldValue.increment(1)
     })
+    batch.update(doc(db, 'users', profile.id), {
+      followerCount: FieldValue.increment(-1)
+    });
     return await batch.commit();
   } catch (e) {
     throw e;

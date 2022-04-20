@@ -42,12 +42,16 @@ const Checkout = () => {
 
   return (
     <div className="checkout">
-      <h1>Stripe Checkout</h1>
-      <p className="checkout-title">Design+Code React Hooks Course</p>
+      <h1>Rewards Checkout</h1>
+      <p className="checkout-title">Terms And Conditions:</p>
       <p className="checkout-description">
-        Learn how to build a website with React Hooks
+        1.On successfull traiff charges, details about rewards will be sent to email.<br />
+        2.User then needs to choose the reward of his liking and reply to that mail.<br />
+        3.Reward tab gets unlocked after certain number of events are created.<br />
+        4.Tab gets locked after redeemation but unlocks again if conditions are met.<br />
+        5.Happy Creating!!!!
       </p>
-      <h1 className="checkout-price">$19</h1>
+      <h1 className="checkout-price">100 rupees</h1>
       <img
         className="checkout-product-image"
         src={ProductImage}

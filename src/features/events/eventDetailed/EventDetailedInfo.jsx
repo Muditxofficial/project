@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Segment, Grid, Icon, Button } from 'semantic-ui-react';
 import { format } from 'date-fns';
 import EventDetailedMap from './EventDetailedMap';
+import Mappy from '../../mappy/Map';
 
 export default function EventDetailedInfo({ event }) {
   const [mapOpen, setMapOpenToggle] = useState(false);
@@ -44,8 +45,11 @@ export default function EventDetailedInfo({ event }) {
           </Grid.Column>
         </Grid>
       </Segment>
-      {/* {mapOpen &&
-        <EventDetailedMap latLng={event.venue.latLng} />} */}
+      {mapOpen &&
+        <section className='="hidden xl:inline-flex xl:min-w-[600px]'>
+          <Mappy />
+        </section>
+      }
     </Segment.Group>
 
   )

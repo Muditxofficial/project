@@ -47,19 +47,19 @@ export async function registerInFirebase(creds) {
 export async function socialLogin(selectedProvider) {
   let provider;
   if (selectedProvider === 'facebook') {
-      provider = new FacebookAuthProvider();
+    provider = new FacebookAuthProvider();
   }
   if (selectedProvider === 'google') {
-      provider = new GoogleAuthProvider();
+    provider = new GoogleAuthProvider();
   }
   try {
-      const result = await signInWithPopup(auth, provider);
-      console.log(result);
-      if (result._tokenResponse.isNewUser) {
-          await setUserProfileData(result.user);
-      }
+    const result = await signInWithPopup(auth, provider);
+    console.log(result);
+    if (result._tokenResponse.isNewUser) {
+      await setUserProfileData(result.user);
+    }
   } catch (error) {
-      toast.error(error.message);
+    toast.error(error.message);
   }
 }
 
@@ -85,12 +85,12 @@ export function deleteFromFirebaseStorage(filename) {
 export function addEventChatComment(eventId, values) {
   const user = auth.currentUser;
   const newComment = {
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      uid: user.uid,
-      text: values.comment,
-      date: Date.now(),
-      parentId: values.parentId
+    displayName: user.displayName,
+    photoURL: user.photoURL,
+    uid: user.uid,
+    text: values.comment,
+    date: Date.now(),
+    parentId: values.parentId
   }
   return push(fbRef(db, `chat/${eventId}`), newComment);
 }
@@ -100,6 +100,7 @@ export function getEventChatRef(eventId) {
 }
 
 export function getUserFeedRef() {
+
   const user = auth.currentUser;
   if (!user) return;
   return query(fbRef(db, `posts/${user.uid}`), orderByKey(), limitToLast(5))

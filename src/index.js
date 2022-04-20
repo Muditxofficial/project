@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'react-calendar/dist/Calendar.css';
@@ -9,7 +10,7 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { configureStore, history } from './app/store/configureStore';
 import ScrollToTop from './app/layout/ScrollToTop';
-import {ConnectedRouter} from 'connected-react-router';
+import { ConnectedRouter } from 'connected-react-router';
 
 const store = configureStore();
 
@@ -27,11 +28,11 @@ function render() {
   );
 }
 
-if (module.hot) {
-  module.hot.accept('./app/layout/App', function () {
-    setTimeout(render);
-  });
-}
+// if (module.hot) {
+//   module.hot.accept('./app/layout/App', function () {
+//     setTimeout(render);
+//   });
+// }
 
 render();
 

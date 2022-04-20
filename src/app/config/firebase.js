@@ -1,5 +1,4 @@
 import { initializeApp } from 'firebase/app';
-
 const firebaseConfig = {
   apiKey: `${process.env.REACT_APP_API_KEY}`,
   authDomain: "thsem-c5c7e.firebaseapp.com",

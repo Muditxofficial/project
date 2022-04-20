@@ -33,13 +33,13 @@ code {
 .checkout-price {
   font-style: normal;
   font-weight: 600;
-  font-size: 60px;
+  font-size: 30px;
   line-height: 95px;
   margin: 0;
   color: rgba(0, 0, 0, 1);
 }
 
-.checkout-description {
+/* .checkout-description {
   font-style: normal;
   font-weight: 500;
   font-size: 15px;
@@ -48,7 +48,7 @@ code {
   margin: 0 auto;
   margin-top: 10px;
   color: rgba(0, 0, 0, 0.7);
-}
+} */
 
 .checkout-product-image {
   width: 400px;
