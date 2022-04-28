@@ -30,13 +30,17 @@ export default function EventDetailedInfo({ event }) {
       </Segment>
       <Segment attached>
         <Grid verticalAlign="middle">
+        
           <Grid.Column width={1}>
+          
             <Icon name="marker" size="large" color="teal" />
+            <p>MapBox</p>
           </Grid.Column>
           <Grid.Column width={11}>
             <span>{event.venue}</span>
           </Grid.Column>
           <Grid.Column width={4}>
+
             <Button
               onClick={() => setMapOpenToggle(!mapOpen)}
               color="teal" size="tiny"
@@ -47,7 +51,7 @@ export default function EventDetailedInfo({ event }) {
       </Segment>
       {mapOpen &&
         <section className='="hidden xl:inline-flex xl:min-w-[600px]'>
-          <Mappy />
+          <Mappy cord={event}/>
         </section>
       }
     </Segment.Group>

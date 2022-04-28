@@ -9,6 +9,7 @@ import { useState } from 'react';
 import EventsFeed from './EventsFeed';
 import { useEffect } from 'react';
 import { RETAIN_STATE } from '../eventConstants';
+import News from '../../../new/news';
 
 export default function EventDashboard() {
   const limit = 2;
@@ -50,7 +51,8 @@ export default function EventDashboard() {
         />
       </Grid.Column>
       <Grid.Column width={6}>
-        {authenticated && <EventsFeed />}
+        {/* {authenticated && <EventsFeed />} */}
+        {authenticated && <News/>}
         <EventFilters
           loading={loading}
         />

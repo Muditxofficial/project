@@ -39,6 +39,8 @@ export default function EventForm({ match, history, location }) {
     title: '',
     category: '',
     description: '',
+    latitude:'',
+    longitude:'',
     // city: {
     //   address: '',
     //   latLng: null,
@@ -54,6 +56,8 @@ export default function EventForm({ match, history, location }) {
     title: Yup.string().required('You must provide a title'),
     category: Yup.string().required('You must provide a category'),
     description: Yup.string().required(),
+    longitude: Yup.number().required(),
+    latitude: Yup.number().required(),
     // city: Yup.object().shape({
     //   address: Yup.string().required('City is required'),
     // }),
