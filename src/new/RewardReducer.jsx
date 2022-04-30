@@ -1,28 +1,24 @@
-const OPEN_REWARD = 'OPEN_REWARD';
-const CLOSE_REWARD = 'CLOSE_REWARD';
+import { CLOSE_REWARD, OPEN_REWARD } from "./rewardConstants";
 
-export function openReward(payload) {
-  return {
-    type: OPEN_REWARD,
-    payload,
-  };
-}
 
-export function closeReward() {
-  return {
-    type: CLOSE_REWARD,
-  };
-}
 
-const initialState = null;
+const initialState = {
+  isOpen:false,
+};
 
-export default function modalReducer(state = initialState, { type, payload }) {
-  switch (type) {
+export default function rewardReducer(state = initialState,action) {
+  switch (action.type) {
     case OPEN_REWARD:
-      const { modalType, modalProps } = payload;
-      return { modalType, modalProps };
+      return {
+        ...state,
+        isOpen:true,
+      };
+  
     case CLOSE_REWARD:
-      return null;
+      return {
+        ...state,
+        isOpen:false,
+      };
     default:
       return state;
   }

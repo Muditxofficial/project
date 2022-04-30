@@ -5,6 +5,7 @@ import authReducer from '../../features/auth/authReducer';
 import asyncReducer from '../async/asyncReducer';
 import profileReducer from '../../features/profiles/profileReducer';
 import { connectRouter } from 'connected-react-router';
+import rewardReducer from '../../new/RewardReducer';
 
 const rootReducer = (history) => combineReducers({
   router: connectRouter(history),
@@ -13,7 +14,8 @@ const rootReducer = (history) => combineReducers({
   modals: modalReducer,
   auth: authReducer,
   async: asyncReducer,
-  profile: profileReducer
+  profile: profileReducer,
+  reward:rewardReducer
 })
 
 export default rootReducer;
