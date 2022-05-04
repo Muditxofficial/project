@@ -11,7 +11,7 @@ import MyTextArea from '../../../app/common/form/MyTextArea';
 import MySelectInput from '../../../app/common/form/MySelectInput';
 import { categoryData } from '../../../app/api/categoryOptions';
 import MyDateInput from '../../../app/common/form/MyDateInput';
-import MyPlaceInput from '../../../app/common/form/MyPlaceInput';
+
 import {
   listenToEventFromFirestore,
   updateEventInFirestore,

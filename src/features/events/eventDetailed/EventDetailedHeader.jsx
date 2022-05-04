@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Image, Item, Header, Button } from 'semantic-ui-react';
+import { Segment, Image, Item, Header, Button, Message } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useState } from 'react';
@@ -111,10 +111,12 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
               to={`/manage/${event.id}`}
               color='orange'
               floated='right'
+              
             >
               Manage Event
             </Button>
           )}
+         
         </Segment>
       </Segment.Group>
     </>
