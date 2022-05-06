@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Image, Item, Header, Button, Message } from 'semantic-ui-react';
+import { Segment, Image, Item, Header, Button, Message,Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useState } from 'react';
@@ -16,12 +16,13 @@ const eventImageStyle = {
 };
 
 const eventImageTextStyle = {
-  position: 'absolute',
+  position: 'relative',
   bottom: '5%',
   left: '5%',
   width: '100%',
   height: 'auto',
   color: 'white',
+  
 };
 
 export default function EventDetailedHeader({ event, isHost, isGoing }) {
@@ -54,7 +55,9 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
   return (
     <>
       {modalOpen && <UnauthModal setModalOpen={setModalOpen} />}
-      <Segment.Group>
+      
+      <Segment.Group >
+      
         <Segment basic attached='top' style={{ padding: '0' }}>
           <Image
             src={`/assets/categoryImages/${event.category}.jpg`}
@@ -85,7 +88,7 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
             </Item.Group>
           </Segment>
         </Segment>
-
+      
         <Segment attached='bottom' clearing>
           {!isHost && (
             <>
@@ -119,6 +122,7 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
          
         </Segment>
       </Segment.Group>
+      
     </>
   );
 }

@@ -51,7 +51,7 @@ export default function EventDashboard() {
           moreEvents={moreEvents}
         />
       </Grid.Column>
-      <Grid.Column width={6}>
+      <Grid.Column  mobile={16} tablet={8} computer={5}>
         {/* {authenticated && <EventsFeed />} */}
         {authenticated && <News/>}
         <EventFilters

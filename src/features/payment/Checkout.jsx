@@ -4,6 +4,9 @@ import { loadStripe } from "@stripe/stripe-js"
 import "./styles.css";
 import { useState } from "react";
 import emailjs from '@emailjs/browser';
+
+
+
 let stripePromise;
 
 const getStripe = () => {
@@ -17,7 +20,7 @@ const getStripe = () => {
 const templateParams = {
   to_name:'mudit',
   to_email:'muditchoudhary4@gmail.com',
-  message:'Hey There,Congrulations on unlocking the rewards section.Our team will rreview and while they do,please reply by choosing any reward u wish from leetcode subscription/netflix subscption for 1 hour.'
+  message:'Hey There,Congrulations on unlocking the rewards section.Our team will rreview and while they do,please reply by choosing any reward u wish from leetcode subscription/netflix subscption for 1 day.'
 };
 
 const Checkout = () => {
@@ -71,6 +74,7 @@ const Checkout = () => {
         src={ProductImage}
         alt="Product"
       />
+   
       <button className="checkout-button" onClick={redirectToCheckout} disabled={isLoading}>
         <div className="grey-circle">
           <div className="purple-circle">
@@ -81,6 +85,7 @@ const Checkout = () => {
           <p className="text">{isLoading ? "Loading..." : "Buy"}</p>
         </div>
       </button>
+     
     </div>
   );
 };

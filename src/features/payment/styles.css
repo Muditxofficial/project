@@ -82,3 +82,8 @@ code {
   color: rgba(0, 0, 0, 1);
   margin: 0;
 }
+
+.checkout-product-image {
+  max-width: 100%;
+  height: auto;
+}

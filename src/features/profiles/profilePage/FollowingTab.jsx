@@ -26,7 +26,7 @@ export default function FollowingTab({ profile, activeTab }) {
   });
 
   return (
-    <Tab.Pane>
+    <Tab.Pane >
       <Grid>
         <Grid.Column width={16}>
           <Header floated='left' icon='user' content={activeTab === 3 ? 'Followers' : 'Following'} />

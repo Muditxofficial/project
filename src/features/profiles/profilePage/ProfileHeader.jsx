@@ -86,7 +86,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
             </Item>
           </Item.Group>
         </Grid.Column>
-        <Grid.Column width={4}>
+        <Grid.Column mobile={16} tablet={8} computer={5}>
           <Statistic.Group>
             <Statistic label='Followers' value={profile.followerCount || 0} />
             <Statistic label='Following' value={profile.followingCount || 0} />

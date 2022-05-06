@@ -14,7 +14,7 @@ export default function SocialLogin() {
 
     return (
         <>
-            <Button onClick={() => handleSocialLogin('facebook')} icon='facebook' fluid color='facebook' style={{marginBottom: 10}} content='Login with Facebook' />
+            
             <Button onClick={() => handleSocialLogin('google')} icon='google' fluid color='google plus' content='Login with Google' />
         </>
     )

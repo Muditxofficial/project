@@ -7,8 +7,8 @@ import { format } from 'date-fns';
 export default function EventListItem({ event }) {
 
   return (
-    <Segment.Group>
-      <Segment>
+    <Segment.Group style={{ padding: '0' }}>
+      <Segment >
         <Item.Group>
           <Item>
             <Item.Image size='tiny' circular src={event.hostPhotoURL} />

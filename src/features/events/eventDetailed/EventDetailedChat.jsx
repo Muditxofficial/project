@@ -53,7 +53,7 @@ export default function EventDetailedChat({ eventId }) {
       </Segment>
 
       {authenticated &&
-      <Segment attached>
+      <Segment attached compact>
         <EventDetailedChatForm
           eventId={eventId}
           parentId={0}

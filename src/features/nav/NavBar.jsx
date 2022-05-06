@@ -11,7 +11,7 @@ export default function NavBar({ setFormOpen }) {
   const { authenticated } = useSelector(state => state.auth);
   const { isOpen } = useSelector((state) => state.reward);
   return (
-    <Menu inverted fixed='top'>
+    <Menu inverted stackable style={{marginTop:"0px"}}>
       <Container>
         <Menu.Item as={NavLink} exact to='/' header>
           <img src='/assets/logo.png' alt='logo' style={{ marginRight: 15 }} />

@@ -18,6 +18,16 @@ import { app } from '../config/firebase';
 const auth = getAuth(app);
 const db = getDatabase(app);
 
+//new
+export function firebaseGetEmail(){
+  const user = auth.currentUser;
+  if (user !== null) {
+    user.providerData.forEach((profile) => {
+      return profile.email;
+    });}
+}
+//old
+
 export function firebaseObjectToArray(snapshot) {
   if (snapshot) {
     return Object.entries(snapshot).map(e => Object.assign({}, e[1], { id: e[0] }))
