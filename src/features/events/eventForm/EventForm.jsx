@@ -1,27 +1,28 @@
 /* global google */
-import React, { useState } from 'react';
-import { Segment, Header, Button, Confirm } from 'semantic-ui-react';
-import { Link, Redirect } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { listenToSelectedEvent, clearSelectedEvent } from '../eventActions';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import MyTextInput from '../../../app/common/form/MyTextInput';
-import MyTextArea from '../../../app/common/form/MyTextArea';
-import MySelectInput from '../../../app/common/form/MySelectInput';
-import { categoryData } from '../../../app/api/categoryOptions';
-import MyDateInput from '../../../app/common/form/MyDateInput';
+import React, { useState } from "react";
+import { Segment, Header, Button, Confirm } from "semantic-ui-react";
+import { Link, Redirect } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { listenToSelectedEvent, clearSelectedEvent } from "../eventActions";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import MyTextInput from "../../../app/common/form/MyTextInput";
+import MyTextArea from "../../../app/common/form/MyTextArea";
+import MySelectInput from "../../../app/common/form/MySelectInput";
+import { categoryData } from "../../../app/api/categoryOptions";
+import MyDateInput from "../../../app/common/form/MyDateInput";
 
 import {
   listenToEventFromFirestore,
   updateEventInFirestore,
   addEventToFirestore,
   cancelEventToggle,
-} from '../../../app/firestore/firestoreService';
-import useFirestoreDoc from '../../../app/hooks/useFirestoreDoc';
-import LoadingComponent from '../../../app/layout/LoadingComponent';
-import { toast } from 'react-toastify';
-import { useEffect } from 'react';
+} from "../../../app/firestore/firestoreService";
+import useFirestoreDoc from "../../../app/hooks/useFirestoreDoc";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
+import { openRewardSec } from "../../../new/rewardActions";
 
 export default function EventForm({ match, history, location }) {
   const dispatch = useDispatch();
@@ -31,39 +32,27 @@ export default function EventForm({ match, history, location }) {
   const { loading, error } = useSelector((state) => state.async);
 
   useEffect(() => {
-    if (location.pathname !== '/createEvent') return;
+    if (location.pathname !== "/createEvent") return;
     dispatch(clearSelectedEvent());
-  }, [dispatch, location.pathname])
+  }, [dispatch, location.pathname]);
 
   const initialValues = selectedEvent ?? {
-    title: '',
-    category: '',
-    description: '',
-    latitude:'',
-    longitude:'',
-    // city: {
-    //   address: '',
-    //   latLng: null,
-    // },
-    // venue: {
-    //   address: '',
-    //   latLng: null,
-    // },
-    date: '',
+    title: "",
+    category: "",
+    description: "",
+    latitude: "",
+    longitude: "",
+    venue: "",
+    date: "",
   };
 
   const validationSchema = Yup.object({
-    title: Yup.string().required('You must provide a title'),
-    category: Yup.string().required('You must provide a category'),
+    title: Yup.string().required("You must provide a title"),
+    category: Yup.string().required("You must provide a category"),
     description: Yup.string().required(),
-    longitude: Yup.number().required(),
-    latitude: Yup.number().required(),
-    // city: Yup.object().shape({
-    //   address: Yup.string().required('City is required'),
-    // }),
-    // venue: Yup.object().shape({
-    //   address: Yup.string().required('Venue is required'),
-    // }),
+    longitude: Yup.number(),
+    latitude: Yup.number(),
+    venue: Yup.string().required(),
     date: Yup.string().required(),
   });
 
@@ -80,7 +69,9 @@ export default function EventForm({ match, history, location }) {
   }
 
   useFirestoreDoc({
-    shouldExecute: match.params.id !== selectedEvent?.id && location.pathname !== '/createEvent',
+    shouldExecute:
+      match.params.id !== selectedEvent?.id &&
+      location.pathname !== "/createEvent",
     query: () => listenToEventFromFirestore(match.params.id),
     data: (event) => dispatch(listenToSelectedEvent(event)),
     deps: [match.params.id, dispatch],
@@ -102,13 +93,12 @@ export default function EventForm({ match, history, location }) {
               ? await updateEventInFirestore(values)
               : await addEventToFirestore(values);
             setSubmitting(false);
-            history.push('/events');
+            history.push("/events");
           } catch (error) {
             toast.error(error.message);
             setSubmitting(false);
           }
-        }}
-      >
+        }}>
         {({ isSubmitting, dirty, isValid }) => (
           <Form className='ui form'>
             <Header sub color='teal' content='Event Details' />
@@ -132,16 +122,17 @@ export default function EventForm({ match, history, location }) {
             />
             <MyTextInput name='latitude' placeholder='Location Latitude' />
             <MyTextInput name='longitude' placeholder='Location Longitude' />
+            <MyTextInput name='venue' placeholder='Location venue' />
             {selectedEvent && (
               <Button
                 loading={loadingCancel}
                 type='button'
                 floated='left'
-                color={selectedEvent.isCancelled ? 'green' : 'red'}
+                color={selectedEvent.isCancelled ? "green" : "red"}
                 content={
                   selectedEvent.isCancelled
-                    ? 'Reactivate event'
-                    : 'Cancel Event'
+                    ? "Reactivate event"
+                    : "Cancel Event"
                 }
                 onClick={() => setConfirmOpen(true)}
               />
@@ -153,6 +144,7 @@ export default function EventForm({ match, history, location }) {
               floated='right'
               positive
               content='Submit'
+              onClick={() => dispatch(openRewardSec())}
             />
             <Button
               disabled={isSubmitting}
@@ -168,8 +160,8 @@ export default function EventForm({ match, history, location }) {
       <Confirm
         content={
           selectedEvent?.isCancelled
-            ? 'This will reactivate the event - are you sure?'
-            : 'This will cancel the event - are you sure?'
+            ? "This will reactivate the event - are you sure?"
+            : "This will cancel the event - are you sure?"
         }
         open={confirmOpen}
         onCancel={() => setConfirmOpen(false)}

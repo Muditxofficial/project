@@ -10,7 +10,7 @@ export default function EventList({
 }) {
   return (
     <>
-      {events.length !== 0 && (
+      {events.length !== 0 ? (
         <InfiniteScroll
           pageStart={0}
           loadMore={getNextEvents}
@@ -21,7 +21,7 @@ export default function EventList({
             <EventListItem event={event} key={event.id} />
           ))}
         </InfiniteScroll>
-      )}
+      ):<h1>NO EVENTS</h1>}
     </>
   );
 }

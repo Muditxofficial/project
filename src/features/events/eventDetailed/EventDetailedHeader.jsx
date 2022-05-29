@@ -1,28 +1,35 @@
-import React from 'react';
-import { Segment, Image, Item, Header, Button, Message,Grid } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import { format } from 'date-fns';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
+import React from "react";
+import {
+  Segment,
+  Image,
+  Item,
+  Header,
+  Button,
+  Message,
+  Grid,
+} from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { format } from "date-fns";
+import { useState } from "react";
+import { toast } from "react-toastify";
 import {
   addUserAttendance,
   cancelUserAttendance,
-} from '../../../app/firestore/firestoreService';
-import { useSelector } from 'react-redux';
-import UnauthModal from '../../auth/UnauthModal';
+} from "../../../app/firestore/firestoreService";
+import { useSelector } from "react-redux";
+import UnauthModal from "../../auth/UnauthModal";
 
 const eventImageStyle = {
-  filter: 'brightness(30%)',
+  filter: "brightness(30%)",
 };
 
 const eventImageTextStyle = {
-  position: 'relative',
-  bottom: '5%',
-  left: '5%',
-  width: '100%',
-  height: 'auto',
-  color: 'white',
-  
+  position: "relative",
+  bottom: "5%",
+  left: "5%",
+  width: "100%",
+  height: "auto",
+  color: "black",
 };
 
 export default function EventDetailedHeader({ event, isHost, isGoing }) {
@@ -55,10 +62,9 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
   return (
     <>
       {modalOpen && <UnauthModal setModalOpen={setModalOpen} />}
-      
-      <Segment.Group >
-      
-        <Segment basic attached='top' style={{ padding: '0' }}>
+
+      <Segment.Group>
+        <Segment basic style={{ padding: "0", objectFit: "contain" }}>
           <Image
             src={`/assets/categoryImages/${event.category}.jpg`}
             fluid
@@ -72,15 +78,15 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
                   <Header
                     size='huge'
                     content={event.title}
-                    style={{ color: 'white' }}
+                    style={{ color: "Green" }}
                   />
-                  <p>{format(event.date, 'MMMM d, yyyy h:mm a')}</p>
+                  <p>{format(event.date, "MMMM d, yyyy h:mm a")}</p>
                   <p>
-                    Hosted by{' '}
+                    Hosted by{" "}
                     <strong>
                       <Link to={`/profile/${event.hostUid}`}>
                         {event.hostedBy}
-                      </Link>{' '}
+                      </Link>{" "}
                     </strong>
                   </p>
                 </Item.Content>
@@ -88,7 +94,7 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
             </Item.Group>
           </Segment>
         </Segment>
-      
+
         <Segment attached='bottom' clearing>
           {!isHost && (
             <>
@@ -98,10 +104,13 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
                 </Button>
               ) : (
                 <Button
-                  onClick={authenticated ? handleUserJoinEvent : () => setModalOpen(true)}
+                  onClick={
+                    authenticated
+                      ? handleUserJoinEvent
+                      : () => setModalOpen(true)
+                  }
                   loading={loading}
-                  color='teal'
-                >
+                  color='teal'>
                   JOIN THIS EVENT
                 </Button>
               )}
@@ -113,16 +122,12 @@ export default function EventDetailedHeader({ event, isHost, isGoing }) {
               as={Link}
               to={`/manage/${event.id}`}
               color='orange'
-              floated='right'
-              
-            >
+              floated='right'>
               Manage Event
             </Button>
           )}
-         
         </Segment>
       </Segment.Group>
-      
     </>
   );
 }

@@ -29,9 +29,9 @@ export default function EventsFeed() {
       <Header attached color='teal' icon='newspaper' content='News feed' />
       <Segment attached='bottom'>
         <Feed>
-          {feed.map(post => (
+          {  feed.map(post => (
             <EventFeedItem post={post} key={post.id} />
-          ))}
+          )) }
         </Feed>
       </Segment>
     </>
