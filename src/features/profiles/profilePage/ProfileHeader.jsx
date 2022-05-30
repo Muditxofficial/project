@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Segment,
   Grid,
@@ -8,19 +8,24 @@ import {
   Divider,
   Reveal,
   Button,
-} from 'semantic-ui-react';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { followUser, unfollowUser, getFollowingDoc } from '../../../app/firestore/firestoreService';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { setFollowUser, setUnfollowUser } from '../profileActions';
-import { CLEAR_FOLLOWINGS } from '../profileConstants';
+} from "semantic-ui-react";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import {
+  followUser,
+  unfollowUser,
+  getFollowingDoc,
+} from "../../../app/firestore/firestoreService";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setFollowUser, setUnfollowUser } from "../profileActions";
+import { CLEAR_FOLLOWINGS } from "../profileConstants";
 
 export default function ProfileHeader({ profile, isCurrentUser }) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const {followingUser} = useSelector(state => state.profile);
+  const { followingUser } = useSelector((state) => state.profile);
+  const [checking, setChecking] = useState(false);
 
   useEffect(() => {
     if (isCurrentUser) return;
@@ -29,7 +34,7 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
       try {
         const followingDoc = await getFollowingDoc(profile.id);
         if (followingDoc && followingDoc.exists) {
-          dispatch(setFollowUser())
+          dispatch(setFollowUser());
         }
       } catch (error) {
         toast.error(error.message);
@@ -37,15 +42,17 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
     }
     fetchFollowingDoc().then(() => setLoading(false));
     return () => {
-      dispatch({type: CLEAR_FOLLOWINGS})
-    }
-  }, [dispatch, profile.id, isCurrentUser])
+      dispatch({ type: CLEAR_FOLLOWINGS });
+    };
+  }, [dispatch, profile.id, isCurrentUser]);
 
   async function handleFollowUser() {
     setLoading(true);
+    setChecking(true);
+
     try {
       await followUser(profile);
-      dispatch(setFollowUser())
+      dispatch(setFollowUser());
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -55,6 +62,8 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
 
   async function handleUnfollowUser() {
     setLoading(true);
+    setChecking(false);
+
     try {
       await unfollowUser(profile);
       dispatch(setUnfollowUser());
@@ -74,12 +83,12 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
               <Item.Image
                 avatar
                 size='small'
-                src={profile.photoURL || '/assets/user.png'}
+                src={profile.photoURL || "/assets/user.png"}
               />
               <Item.Content verticalAlign='middle'>
                 <Header
                   as='h1'
-                  style={{ display: 'block', marginBottom: 10 }}
+                  style={{ display: "block", marginBottom: 10 }}
                   content={profile.displayName}
                 />
               </Item.Content>
@@ -88,24 +97,29 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
         </Grid.Column>
         <Grid.Column mobile={16} tablet={8} computer={5}>
           <Statistic.Group>
-            <Statistic label='Followers' value={profile.followerCount || 0} />
-            <Statistic label='Following' value={profile.followingCount || 0} />
+            {/* <Statistic label='Followers' value={votes} />
+            <Statistic label='Following' value={votes} /> */}
           </Statistic.Group>
           {!isCurrentUser && (
             <>
               <Divider />
               <Reveal animated='move'>
-                <Reveal.Content visible style={{ width: '100%' }}>
-                  <Button fluid color='teal' content={followingUser ? 'Following' : 'Not following'} />
-                </Reveal.Content>
-                <Reveal.Content hidden style={{ width: '100%' }}>
+                <Reveal.Content visible style={{ width: "100%" }}>
                   <Button
-                    onClick={followingUser ? () => handleUnfollowUser() : () => handleFollowUser()}
+                    fluid
+                    color='teal'
+                    content={checking ? "following" : "CLick to follow"}
+                  />
+                  {/* <Button fluid color='teal' content={followingUser ? 'Following' : 'Not following'} /> */}
+                </Reveal.Content>
+                <Reveal.Content hidden style={{ width: "100%" }}>
+                  <Button
+                    onClick={checking ? handleUnfollowUser : handleFollowUser}
                     loading={loading}
                     basic
                     fluid
-                    color={followingUser ? 'red' : 'green'}
-                    content={followingUser ? 'Unfollow' : 'Follow'}
+                    color={checking ? "red" : "green"}
+                    content={checking ? "Unfollow" : "Follow"}
                   />
                 </Reveal.Content>
               </Reveal>

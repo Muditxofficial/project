@@ -19,7 +19,7 @@ import {
   writeBatch,
   limit,
   startAfter,
-  FieldValue
+  FieldValue,
 } from 'firebase/firestore';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { app } from '../config/firebase';
@@ -264,26 +264,18 @@ export function getUserEventsQuery(activeTab, userUid) {
 
 export async function followUser(profile) {
   const user = auth.currentUser;
-  // const batch = writeBatch(db);
+  const batch = writeBatch(db);
   try {
-
-    await setDoc(doc(db, 'following', user.uid, 'userFollowing', profile.id), {
+    batch.set(doc(db, 'following', user.uid, 'userFollowing', profile.id), {
       displayName: profile.displayName,
       photoURL: profile.photoURL || '/assets/user.png',
       uid: profile.id
     });
-    await setDoc(doc(db, 'following', profile.id, 'userFollowers', user.uid), {
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      uid: user.uid
-    });
-    await updateDoc(doc(db, 'users', profile.id), {
-      followerCount: FieldValue.increment(1)
-    })
-    return await updateDoc(doc(db, 'users', user.uid), {
-      followingCount: FieldValue.increment(1)
-    })
 
+    batch.update(doc(db, 'users', user.uid), {
+      followingCount: increment(1)
+    })
+    return await batch.commit();
   } catch (e) {
     throw e
   }
@@ -291,17 +283,13 @@ export async function followUser(profile) {
 
 export async function unfollowUser(profile) {
   const user = auth.currentUser;
-  // const batch = writeBatch(db);
+  const batch = writeBatch(db);
   try {
-    await deleteDoc(doc(db, 'following', user.uid, 'userFollowing', profile.id));
-    await deleteDoc(doc(db, 'following', profile.id, 'userFollowers', user.uid));
-    await updateDoc(doc(db, 'users', user.uid), {
-      followingCount: FieldValue.increment(-1)
+    batch.delete(doc(db, 'following', user.uid, 'userFollowing', profile.id));
+    batch.update(doc(db, 'users', user.uid), {
+      followingCount: increment(-1)
     })
-    return await updateDoc(doc(db, 'users', profile.id), {
-      followerCount: FieldValue.increment(-1)
-    });
-
+    return await batch.commit();
   } catch (e) {
     throw e;
   }
