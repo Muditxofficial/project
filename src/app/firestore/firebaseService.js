@@ -64,7 +64,7 @@ export async function socialLogin(selectedProvider) {
   }
   try {
     const result = await signInWithPopup(auth, provider);
-    console.log(result);
+    
     if (result._tokenResponse.isNewUser) {
       await setUserProfileData(result.user);
     }
